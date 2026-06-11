@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mbeya Watch Shop</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">⏱</div>
+      <div>
+        <h1>Mbeya Watch Shop</h1>
+        <p>Modern watch shopping in Mbeya, Tanzania</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <a href="/login" class="account-link">Login / Register</a>
+      <button class="cart-toggle" id="cartToggle">Cart <span id="cartCount">0</span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span>Premium local store</span>
+        <h2>Discover elegant watches for everyday style</h2>
+        <p>Choose from quality quartz watches with stainless steel finishes and modern craftsmanship.</p>
+        <div class="hero-actions">
+          <button id="viewProductsBtn">Shop now</button>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="/image/pexels-pixabay-280250.jpg" alt="Watch showcase" />
+      </div>
+    </section>
+
+    <section class="products" id="productsSection">
+      <div class="section-heading">
+        <span>Featured</span>
+        <h2>Designed for style and comfort</h2>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+  </main>
+
+  <aside class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <button id="closeCart">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="empty-cart">Your cart is empty. Add a watch to start.</p>
+    </div>
+    <div class="cart-footer">
+      <div>
+        <span>Total</span>
+        <strong id="cartTotal">TSh 0</strong>
+      </div>
+      <button class="checkout-btn">Checkout</button>
+    </div>
+  </aside>
+
+  <script src="/script.js"></script>
+</body>
+</html>

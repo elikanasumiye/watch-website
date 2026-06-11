@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Mbeya Watch Shop</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">⏱</div>
+      <div>
+        <h1>Mbeya Watch Shop</h1>
+        <p>Sign in or register to shop.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="auth-section">
+      <div class="section-heading">
+        <span>Account</span>
+        <h2>Login or Register</h2>
+      </div>
+      <div class="auth-text">
+        <p>Welcome to Mbeya Watch Shop. Sign in to continue shopping, or create a new account to enjoy fast checkout and easy order tracking.</p>
+      </div>
+      <div class="auth-shell">
+        <div class="auth-tabs">
+          <button class="auth-tab active" type="button" data-tab="login">Login</button>
+          <button class="auth-tab" type="button" data-tab="register">Register</button>
+        </div>
+        <div class="auth-panels">
+          <form class="auth-panel active" id="loginForm">
+            <div id="loginMessage" class="auth-message"></div>
+            <label>Email address</label>
+            <input type="email" name="email" placeholder="example@mail.com" required />
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter your password" required />
+            <button type="submit" class="auth-submit">Login</button>
+          </form>
+          <form class="auth-panel" id="registerForm">
+            <div id="registerMessage" class="auth-message"></div>
+            <label>Full name</label>
+            <input type="text" name="name" placeholder="Your name" required />
+            <label>Email address</label>
+            <input type="email" name="email" placeholder="example@mail.com" required />
+            <label>Phone number</label>
+            <input type="tel" name="phoneNumber" placeholder="254712345678" maxlength="10" required />
+            <label>Password</label>
+            <input type="password" name="password" id="registerPassword" placeholder="Create a password" required />
+            <div class="password-requirements show">
+              <p>Password must contain:</p>
+              <ul>
+                <li id="req-length" class="requirement">At least 8 characters</li>
+                <li id="req-upper" class="requirement">One uppercase letter (A-Z)</li>
+                <li id="req-lower" class="requirement">One lowercase letter (a-z)</li>
+                <li id="req-number" class="requirement">One number (0-9)</li>
+                <li id="req-special" class="requirement">One special character (!@#$%^&*)</li>
+              </ul>
+            </div>
+            <button type="submit" class="auth-submit">Register</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/auth.js"></script>
+</body>
+</html>
