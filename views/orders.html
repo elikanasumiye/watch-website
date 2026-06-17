@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oda za Wateja | Duka la T-Shirt Mbeya</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">T</div>
+      <div>
+        <h1>Oda za Wateja</h1>
+        <p>Taarifa za wateja waliokamilisha oda</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <a href="/" class="admin-link">Rudi dukani</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="orders-section">
+      <div class="section-heading">
+        <span>Database</span>
+        <h2>Oda zilizohifadhiwa</h2>
+      </div>
+      <div class="orders-list" id="ordersList">
+        <p class="empty-cart">Inapakia oda...</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const ordersList = document.getElementById("ordersList");
+
+    function formatCurrency(value) {
+      return `TSh ${Number(value).toLocaleString("sw-TZ")}`;
+    }
+
+    function formatDate(value) {
+      return new Date(value).toLocaleString("sw-TZ", {
+        dateStyle: "medium",
+        timeStyle: "short"
+      });
+    }
+
+    async function loadOrders() {
+      try {
+        const response = await fetch("/api/orders");
+        const data = await response.json();
+
+        if (!response.ok) {
+          ordersList.innerHTML = `<p class="empty-cart">${data.error || "Imeshindikana kupakia oda."}</p>`;
+          return;
+        }
+
+        if (!data.orders.length) {
+          ordersList.innerHTML = `<p class="empty-cart">Hakuna oda iliyohifadhiwa bado.</p>`;
+          return;
+        }
+
+        ordersList.innerHTML = data.orders.map(order => `
+          <article class="order-card">
+            <div class="order-card-header">
+              <div>
+                <h3>Oda #${order.id}</h3>
+                <p>${formatDate(order.createdAt)}</p>
+              </div>
+              <strong>${formatCurrency(order.total)}</strong>
+            </div>
+            <div class="order-details">
+              <p><span>Jina:</span> ${order.fullName}</p>
+              <p><span>Barua pepe:</span> ${order.email}</p>
+              <p><span>Mawasiliano:</span> ${order.contact}</p>
+              <p><span>Mahali:</span> ${order.location}</p>
+              <p><span>Malipo ya delivery:</span> ${order.deliveryPayment}</p>
+            </div>
+            <div class="order-items">
+              ${order.items.map(item => `
+                <div>
+                  <span>${item.name} x ${item.quantity}</span>
+                  <strong>${formatCurrency(item.price * item.quantity)}</strong>
+                </div>
+              `).join("")}
+            </div>
+          </article>
+        `).join("");
+      } catch (error) {
+        ordersList.innerHTML = `<p class="empty-cart">Hitilafu imetokea wakati wa kupakia oda.</p>`;
+      }
+    }
+
+    loadOrders();
+  </script>
+</body>
+</html>
