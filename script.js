@@ -1,17 +1,31 @@
 const products = [
   {
     id: 1,
-    name: "Poedagar Luxury Business Quartz Watch",
-    description: "Classic stainless steel strap with luminous date display and elegant black dial.",
-    price: 85000,
-    image: "image/Poedagar-Men-Watch-Luxury-Business-Quartz-Watches-Stainless-Stain-Strap-Sport-Chronograph-Men-39-s-Wristwatch-Waterproof-Luminous-Quartz-Wristwatches_7b31bf36-11cf-4c68-8dfd-e630bc9a93f6.284ee349d31df69a.avif"
+    name: "T-shirt za Rangi Mchanganyiko",
+    description: "T-shirt laini za pamba zenye rangi nyingi kwa matumizi ya kila siku na vikundi.",
+    price: 18000,
+    image: "image/Exclusive-Design-Man-T-Shirt-Short-100-Cotton-Collar-Assorted-T-Shirts-for-Men.webp"
   },
   {
     id: 2,
-    name: "Poedagar Sport Chronograph Quartz Watch",
-    description: "Full steel luxury chronograph with waterproof construction and sharp modern styling.",
-    price: 95000,
-    image: "image/POEDAGAR-Men-Watch-Sport-Chronograph-Quartz-Watches-Top-Brand-Luxury-Full-Steel-Waterproof-Luminous-Date-Man-Fashion-Wristwatch_53c89d5b-c864-46de-9688-800c14fb1076.85ada78dc657f86f75a3569f267df7d7.avif"
+    name: "T-shirt Nyeusi Crew Neck",
+    description: "Muonekano wa kisasa na rahisi kuvaa, inafaa kwa jeans, koti, au mavazi ya kawaida.",
+    price: 22000,
+    image: "image/hemptique-hemp-crew-neck-t-shirt-black.webp"
+  },
+  {
+    id: 3,
+    name: "T-shirt ya Collar",
+    description: "T-shirt yenye collar kwa mwonekano nadhifu zaidi kazini, dukani, au kwenye matembezi.",
+    price: 25000,
+    image: "image/W10248s.webp"
+  },
+  {
+    id: 4,
+    name: "T-shirt ya Graphic",
+    description: "Chaguo la kipekee kwa wapenzi wa mitindo ya picha na mavazi yanayoonekana haraka.",
+    price: 20000,
+    image: "image/33b705173331423.648ea47a75676.webp"
   }
 ];
 
@@ -24,9 +38,12 @@ const cartItems = document.getElementById("cartItems");
 const cartCount = document.getElementById("cartCount");
 const cartTotal = document.getElementById("cartTotal");
 const viewProductsBtn = document.getElementById("viewProductsBtn");
+const checkoutBtn = document.getElementById("checkoutBtn");
+const orderForm = document.getElementById("orderForm");
+const orderMessage = document.getElementById("orderMessage");
 
 function formatCurrency(value) {
-  return `TSh ${value.toLocaleString("en-US")}`;
+  return `TSh ${value.toLocaleString("sw-TZ")}`;
 }
 
 function updateCartCounter() {
@@ -41,8 +58,15 @@ function updateCartPanel() {
 
   const items = Object.values(cart);
   if (items.length === 0) {
-    cartItems.innerHTML = `<p class="empty-cart">Your cart is empty. Add a watch to start.</p>`;
+    cartItems.innerHTML = `<p class="empty-cart">Kikapu chako bado ni tupu. Ongeza T-shirt kuanza.</p>`;
     cartTotal.textContent = formatCurrency(0);
+    if (orderForm) {
+      orderForm.classList.remove("active");
+      orderForm.reset();
+    }
+    if (checkoutBtn) {
+      checkoutBtn.style.display = "block";
+    }
     return;
   }
 
@@ -58,7 +82,7 @@ function updateCartPanel() {
         <p>${formatCurrency(item.price)} × ${item.quantity}</p>
         <div class="cart-item-actions">
           <span>${formatCurrency(item.price * item.quantity)}</span>
-          <button class="remove-btn" data-id="${item.id}">Remove</button>
+          <button class="remove-btn" data-id="${item.id}">Ondoa</button>
         </div>
       </div>
     `;
@@ -90,6 +114,26 @@ function removeFromCart(productId) {
   updateCartPanel();
 }
 
+function showOrderMessage(message, isError = false) {
+  if (!orderMessage) return;
+  orderMessage.textContent = message;
+  orderMessage.className = `auth-message ${isError ? "error" : "success"}`;
+  orderMessage.style.display = "block";
+}
+
+function getOrderItems() {
+  return Object.values(cart).map(item => ({
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity
+  }));
+}
+
+function getOrderTotal() {
+  return Object.values(cart).reduce((sum, item) => sum + item.price * item.quantity, 0);
+}
+
 function renderProducts() {
   if (!productGrid) return;
   products.forEach(product => {
@@ -103,7 +147,7 @@ function renderProducts() {
       </div>
       <div class="product-meta">
         <span class="price">${formatCurrency(product.price)}</span>
-        <button class="add-button" data-id="${product.id}">Add to cart</button>
+        <button class="add-button" data-id="${product.id}">Ongeza kikapuni</button>
       </div>
     `;
     productGrid.appendChild(card);
@@ -148,38 +192,71 @@ if (viewProductsBtn) {
   });
 }
 
-const authTabs = document.querySelectorAll(".auth-tab");
-const authPanels = document.querySelectorAll(".auth-panel");
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
+if (checkoutBtn && orderForm) {
+  checkoutBtn.addEventListener("click", () => {
+    if (Object.keys(cart).length === 0) {
+      showOrderMessage("Tafadhali ongeza T-shirt kwenye kikapu kwanza.", true);
+      orderForm.classList.add("active");
+      return;
+    }
 
-if (authTabs.length && authPanels.length) {
-  authTabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      authTabs.forEach(item => item.classList.remove("active"));
-      authPanels.forEach(panel => panel.classList.remove("active"));
-      tab.classList.add("active");
-      const activePanel = document.getElementById(`${tab.dataset.tab}Form`);
-      if (activePanel) {
-        activePanel.classList.add("active");
-      }
-    });
+    orderForm.classList.add("active");
+    checkoutBtn.style.display = "none";
+    orderForm.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
 }
 
-function handleAuthSubmit(event, action) {
-  event.preventDefault();
-  alert(`${action} successful. You can now continue shopping.`);
-  event.target.reset();
-  window.location.href = "index.php";
-}
+if (orderForm) {
+  orderForm.addEventListener("submit", async event => {
+    event.preventDefault();
 
-if (loginForm) {
-  loginForm.addEventListener("submit", event => handleAuthSubmit(event, "Login"));
-}
+    const items = getOrderItems();
+    if (items.length === 0) {
+      showOrderMessage("Kikapu chako ni tupu. Ongeza T-shirt kabla ya kutuma oda.", true);
+      return;
+    }
 
-if (registerForm) {
-  registerForm.addEventListener("submit", event => handleAuthSubmit(event, "Register"));
+    const payload = {
+      fullName: orderForm.fullName.value.trim(),
+      email: orderForm.email.value.trim(),
+      contact: orderForm.contact.value.trim(),
+      location: orderForm.location.value.trim(),
+      deliveryPayment: orderForm.deliveryPayment.value,
+      items,
+      total: getOrderTotal()
+    };
+
+    if (!payload.fullName || !payload.email || !payload.contact || !payload.location || !payload.deliveryPayment) {
+      showOrderMessage("Tafadhali jaza taarifa zote za oda.", true);
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        showOrderMessage(data.error || "Oda imeshindikana kutumwa. Jaribu tena.", true);
+        return;
+      }
+
+      Object.keys(cart).forEach(id => delete cart[id]);
+      updateCartCounter();
+      updateCartPanel();
+      orderForm.classList.add("active");
+      if (checkoutBtn) {
+        checkoutBtn.style.display = "none";
+      }
+      showOrderMessage("Oda yako imetumwa kikamilifu. Tutakupigia kwa uthibitisho na delivery.", false);
+    } catch (error) {
+      showOrderMessage("Hitilafu imetokea. Tafadhali jaribu tena.", true);
+    }
+  });
+
 }
 
 renderProducts();

@@ -1,45 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sw">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mbeya Watch Shop</title>
+  <title>Duka la T-Shirt Mbeya</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="brand">
-      <div class="logo">⏱</div>
+      <div class="logo">T</div>
       <div>
-        <h1>Mbeya Watch Shop</h1>
-        <p>Modern watch shopping in Mbeya, Tanzania</p>
+        <h1>Duka la T-Shirt Mbeya</h1>
+        <p>T-shirt bora, za kisasa, na zenye starehe kwa kila siku</p>
       </div>
     </div>
     <div class="topbar-actions">
-      <a href="/login" class="account-link">Login / Register</a>
-      <button class="cart-toggle" id="cartToggle">Cart <span id="cartCount">0</span></button>
+      <button class="cart-toggle" id="cartToggle">Kikapu <span id="cartCount">0</span></button>
     </div>
   </header>
 
   <main>
     <section class="hero">
       <div class="hero-copy">
-        <span>Premium local store</span>
-        <h2>Discover elegant watches for everyday style</h2>
-        <p>Choose from quality quartz watches with stainless steel finishes and modern craftsmanship.</p>
+        <span>Duka la mavazi Mbeya</span>
+        <h2>Chagua T-shirt zinazokupa mwonekano safi na starehe</h2>
+        <p>Tuna T-shirt za pamba, rangi tofauti, na mitindo inayofaa kazini, chuoni, matembezi, na matumizi ya kila siku.</p>
         <div class="hero-actions">
-          <button id="viewProductsBtn">Shop now</button>
+          <button id="viewProductsBtn">Nunua sasa</button>
         </div>
       </div>
       <div class="hero-image">
-        <img src="/image/pexels-pixabay-280250.jpg" alt="Watch showcase" />
+        <img src="/image/Exclusive-Design-Man-T-Shirt-Short-100-Cotton-Collar-Assorted-T-Shirts-for-Men.webp" alt="T-shirt za rangi mbalimbali" />
       </div>
     </section>
 
     <section class="products" id="productsSection">
       <div class="section-heading">
-        <span>Featured</span>
-        <h2>Designed for style and comfort</h2>
+        <span>Bidhaa maarufu</span>
+        <h2>T-shirt zilizochaguliwa kwa ubora na mwonekano</h2>
       </div>
       <div class="product-grid" id="productGrid"></div>
     </section>
@@ -47,18 +46,38 @@
 
   <aside class="cart-panel" id="cartPanel">
     <div class="cart-header">
-      <h2>Your Cart</h2>
+      <h2>Kikapu chako</h2>
       <button id="closeCart">✕</button>
     </div>
     <div class="cart-items" id="cartItems">
-      <p class="empty-cart">Your cart is empty. Add a watch to start.</p>
+      <p class="empty-cart">Kikapu chako bado ni tupu. Ongeza T-shirt kuanza.</p>
     </div>
     <div class="cart-footer">
       <div>
-        <span>Total</span>
+        <span>Jumla</span>
         <strong id="cartTotal">TSh 0</strong>
       </div>
-      <button class="checkout-btn">Checkout</button>
+      <button class="checkout-btn" id="checkoutBtn">Kamilisha oda</button>
+      <form class="auth-panel order-form" id="orderForm">
+        <div id="orderMessage" class="auth-message"></div>
+        <label>Jina kamili</label>
+        <input type="text" name="fullName" placeholder="Jina lako kamili" required />
+        <label>Barua pepe</label>
+        <input type="email" name="email" placeholder="example@mail.com" required />
+        <label>Mawasiliano</label>
+        <input type="tel" name="contact" placeholder="0712345678" required />
+        <label>Mahali ulipo</label>
+        <input type="text" name="location" placeholder="Mtaa, kata, au eneo lako" required />
+        <label>Malipo ya delivery</label>
+        <select name="deliveryPayment" required>
+          <option value="">Chagua namna ya kulipa</option>
+          <option value="Lipa ukipokea">Lipa ukipokea mzigo</option>
+          <option value="Lipa kwa M-Pesa">Lipa kwa M-Pesa</option>
+          <option value="Lipa kwa Airtel Money">Lipa kwa Airtel Money</option>
+          <option value="Lipa kwa Tigo Pesa">Lipa kwa Tigo Pesa</option>
+        </select>
+        <button type="submit" class="auth-submit">Tuma oda</button>
+      </form>
     </div>
   </aside>
 
